@@ -1,0 +1,28 @@
+from Myro import *
+init ("/dev/tty.scribbler")
+
+def makeWebPage(numberofPictures):
+    webpage=open("picturespage","w")
+    webpage.write("""<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Bhavani and Baker</title></head><body>
+    <h1>Hello! We hope you enjoy our webpage!</h1><table>""")
+
+    y = 0
+    aList = []
+    while numberofPictures>0:
+        getLight()
+        x = sum(getLight())/3
+        aList.append(x)
+        savePicturee = takePicture()
+        turnLeft(1,0.5)
+        savePicture(savePicturee, "pic{}.jpg".format(y))
+        numberofPictures = numberofPictures - 1
+        y = y + 1
+
+    if y %4 == 0:
+        webpage.write("""<tr>""")
+    webpage.write("""<td><img src = "pic{}.jpg" width = "200" height = "100" alt= "no picture available"/> <p> {} </p> </td> """ .format(y,x))
+    webpage.write("""</body></html>""")
+    webpage.close()
